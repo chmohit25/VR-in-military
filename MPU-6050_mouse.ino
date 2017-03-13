@@ -1,10 +1,3 @@
-/* Code to control the mouse pointer with the movement of the head
- * and assisted click.
- * Change the values at vx and vy (+300 and -100 in my case) 
- * setting them with the TEST code.
- * 
- * Gabry295
-*/
 
 #include <Wire.h>
 #include <I2Cdev.h>
@@ -38,8 +31,8 @@ void loop() {
   mpu.getMotion6(&ax, &ay, &az, &gx, &gy, &gz);
 /*vxx=vx-gx-310;
   vyy=vy-gz+26;*/
-  vx =-gx-310; //(gy-vxx-200);//+7000)/10;  // "+300" because the x axis of gyroscope give values about -350 while it's not moving. Change this value if you get something different using the TEST code, chacking if there are values far from zero.
-  vy =-gz+26;// -(gz+vyy+700);//-4000)/10; // same here about "-100"
+  vx =-gx-310; // "-310" because the x axis of gyroscope give values about +310 while it's not moving. Change this value if you get something different using the TEST code, chacking if there are values far from zero.
+  vy =-gz+26;//  same here about "+26"
 
 /* if(vxx<100&&vxx>-100)
   { vx=0;
