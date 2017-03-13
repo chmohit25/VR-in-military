@@ -61,6 +61,12 @@ if (pointer[2]==1)
 mouse.mousePress(InputEvent.BUTTON1_MASK); // left mouse click
 else if (pointer[2]==0)
 mouse.mouseRelease(InputEvent.BUTTON1_MASK ); // left mouse release
+
+
+if (pointer[3]==1)
+mouse.mousePress(InputEvent.BUTTON3_MASK); // right mouse click
+else if (pointer[3]==0)
+mouse.mouseRelease(InputEvent.BUTTON3_MASK ); // right mouse release
 }
 
 }
