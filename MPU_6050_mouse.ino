@@ -5,19 +5,25 @@
 
 MPU6050 mpu;
 int16_t ax, ay, az, gx, gy, gz;
-int vx, vy,clik=0,clik1=0;/*, vxx,vy;*/
+int vx, vy,clik=0,clik1=0,clik2=0;/*, vxx,vy;*/
 const int buttonPin = 5;     // the number of the pushbutton pin
 const int button1Pin=6;
+const int button2Pin=7;
 //const int ledPin =  13;      // the number of the LED pin
 int buttonState = 0;
 int button1State=0;
+int button2State=0;
 void setup() {
-  Serial.begin(36000);
+//delay(5000);
+//flush
+Serial.begin(75000);
   Wire.begin();
+  mpu.setFullScaleGyroRange(MPU6050_GYRO_FS_2000);
    mpu.getMotion6(&ax, &ay, &az, &gx, &gy, &gz);
    
   pinMode(buttonPin, INPUT);
   pinMode(button1Pin,INPUT);
+pinMode(button2Pin,INPUT);
    vx=0;
    vy=0;
   mpu.initialize();
@@ -69,7 +75,7 @@ void loop() {
 
  buttonState = digitalRead(buttonPin);
  button1State = digitalRead(button1Pin);
- 
+  button2State = digitalRead(button2Pin);
   // check if the pushbutton is pressed.
   // if it is, the buttonState is HIGH:
   // if (millis()-cliktime>debound||(clik==0&&buttonState==LOW)) 
@@ -94,15 +100,27 @@ void loop() {
    if (clik1==0&&button1State == LOW) {
    clik1=1;
     // turn LED on:
-    Serial.println(1);
+    Serial.print("1,");
   } 
   else if (clik1==1&&button1State==HIGH){
     clik1=0;
     // turn LED off:
-    Serial.println(0);
+    Serial.print("0,");
   }
-  else {Serial.println(2);}
-   //}
+  else {Serial.print("2,");}
+
+  // Reload button
+if (clik2==0&&button2State ==LOW) {
+   clik2=1;
+    // turn LED on:
+    Serial.println("1");
+  } 
+  else if (clik2==1&&buttonState==HIGH){
+    clik2=0;
+    Serial.println("0");
+  }
+  else {Serial.println("2");}
+
 delay(0);
   
 }
