@@ -13,10 +13,13 @@ const int button2Pin=7;
 int buttonState = 0;
 int button1State=0;
 int button2State=0;
+unsigned long lastDebounceTime = 0;  // the last time the output pin was toggled
+unsigned long debounceDelay = 1000;    // the debounce time; increase if the output flickers
+
 void setup() {
 //delay(5000);
 //flush
-Serial.begin(75000);
+Serial.begin(38400);
   Wire.begin();
   mpu.setFullScaleGyroRange(MPU6050_GYRO_FS_2000);
    mpu.getMotion6(&ax, &ay, &az, &gx, &gy, &gz);
@@ -24,11 +27,12 @@ Serial.begin(75000);
   pinMode(buttonPin, INPUT);
   pinMode(button1Pin,INPUT);
 pinMode(button2Pin,INPUT);
+pinMode(8,OUTPUT);
    vx=0;
    vy=0;
   mpu.initialize();
-  if (!mpu.testConnection()) {
-    while (1);
+  while (!mpu.testConnection()) {
+    Serial.print(2);
     }
 }
 
@@ -115,11 +119,17 @@ if (clik2==0&&button2State ==LOW) {
     // turn LED on:
     Serial.println("1");
   } 
-  else if (clik2==1&&buttonState==HIGH){
+  else if (clik2==1&&button2State==HIGH){
     clik2=0;
     Serial.println("0");
   }
   else {Serial.println("2");}
+  
+if (buttonState==LOW)
+{if ((millis() - lastDebounceTime) > debounceDelay){
+ digitalWrite(8,HIGH);
+ lastDebounceTime=millis();
+  }}
 
 delay(0);
   
