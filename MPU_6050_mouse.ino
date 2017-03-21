@@ -13,8 +13,8 @@ const int button2Pin=7;
 int buttonState = 0;
 int button1State=0;
 int button2State=0;
-unsigned long lastDebounceTime = 0;  // the last time the output pin was toggled
-unsigned long debounceDelay = 1000;    // the debounce time; increase if the output flickers
+unsigned long recoilTime = 0;  // the last time the output pin was toggled
+unsigned long  recoilPulse = 100;    // the debounce time; increase if the output flickers
 
 void setup() {
 //delay(5000);
@@ -24,10 +24,14 @@ Serial.begin(38400);
   mpu.setFullScaleGyroRange(MPU6050_GYRO_FS_2000);
    mpu.getMotion6(&ax, &ay, &az, &gx, &gy, &gz);
    
-  pinMode(buttonPin, INPUT);
-  pinMode(button1Pin,INPUT);
+pinMode(buttonPin, INPUT);
+pinMode(button1Pin,INPUT);
 pinMode(button2Pin,INPUT);
+pinMode(10,OUTPUT);
+pinMode(9,OUTPUT);
 pinMode(8,OUTPUT);
+digitalWrite(8,HIGH);
+digitalWrite(10,LOW);
    vx=0;
    vy=0;
   mpu.initialize();
@@ -92,6 +96,8 @@ void loop() {
    clik=1;
     // turn LED on:
     Serial.print("1,");
+    digitalWrite(9,HIGH);
+    recoilTime=millis();
   } 
   else if (clik==1&&buttonState==HIGH){
     clik=0;
@@ -100,6 +106,9 @@ void loop() {
   }
   else {Serial.print("2,");}
   
+  if ((millis()-recoilTime) > recoilPulse){
+ digitalWrite(9,LOW);
+  }
   // RIGHT CLICK
    if (clik1==0&&button1State == LOW) {
    clik1=1;
@@ -123,14 +132,10 @@ if (clik2==0&&button2State ==LOW) {
     clik2=0;
     Serial.println("0");
   }
-  else {Serial.println("2");}
-  
-if (buttonState==LOW)
-{if ((millis() - lastDebounceTime) > debounceDelay){
- digitalWrite(8,HIGH);
- lastDebounceTime=millis();
-  }}
+  else {Serial.println("2");} 
 
-delay(0);
+  }
+
+//delay(0);
   
-}
+
