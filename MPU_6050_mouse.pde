@@ -17,11 +17,11 @@ Serial port1;
 void setup() {
   size(100, 100);
   try { 
-    port = new Serial(this, "com4", 75000); //com= arduino com (Arduino ide -> Tool -> Port:"comX"
- port1 = new Serial(this, "com3", 75000);  
+    port = new Serial(this, "com12", 38400); //com= arduino com (Arduino ide -> Tool -> Port:"comX"
+// port1 = new Serial(this, "com7", 38400);  
  delay(100);
  port.bufferUntil('\n');
- port1.bufferUntil('\n');
+ //port1.bufferUntil('\n');
  delay(100);
 } 
   catch(Exception ex) {
@@ -40,16 +40,14 @@ void setup() {
 }
 void draw()
 { 
-  System.out.println("("+nxx+", "+nyy+")"); 
+ // System.out.println("("+nxx+", "+nyy+")"); 
   nxx=MouseInfo.getPointerInfo().getLocation().x; 
   nyy=MouseInfo.getPointerInfo().getLocation().y;
 }
 
 void serialEvent(Serial myPort) {
-  //String input = myPort.readStringUntil('\n');
-  if (myPort==port){
  String input = myPort.readStringUntil('\n');
-
+  //if (myPort==port){
   //try{
 
   if (input != null) {
@@ -62,7 +60,6 @@ void serialEvent(Serial myPort) {
       //if (nxx>xx+0 || nyy>yy+0 || nxx<xx-0||nyy<yy-0)
       //{ xx=nxx; yy=nyy;delay(0); }
       //else
-
       { 
         xx= nxx+pointer[0]; 
         yy=nyy+pointer[1]; 
@@ -85,18 +82,17 @@ void serialEvent(Serial myPort) {
       mouse.keyPress(KeyEvent.VK_R); // Reload
     else if (pointer[4]==0)
       mouse.keyRelease(KeyEvent.VK_R); // Reload
-   }
 }
-   }
-   if (myPort==port1){
+  
+  /* if (myPort==port1){
      
      String input1 = myPort.readStringUntil('\n');
   if (input1 != null) {
     input1 = trim(input1);
    int [] legs = int(split(input1, ","));
-    if (legs.length==2) {
+    if (legs.length==1) {
  
-  if (legs[0]>1)
+  if (legs[0]!=0)
       mouse.keyPress(KeyEvent.VK_W); // Forward
     else if (legs[1]==0)
       mouse.keyRelease(KeyEvent.VK_W); // Forward
@@ -104,5 +100,6 @@ void serialEvent(Serial myPort) {
     }
    }
      //delay(10);
-}
+}*/
   }
+}
