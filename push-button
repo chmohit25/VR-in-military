@@ -1,0 +1,86 @@
+/*
+  Button
+
+ Turns on and off a light emitting diode(LED) connected to digital
+ pin 13, when pressing a pushbutton attached to pin 2.
+
+
+ The circuit:
+ * LED attached from pin 13 to ground
+ * pushbutton attached to pin 2 from +5V
+ * 10K resistor attached to pin 2 from ground
+
+ * Note: on most Arduinos there is already an LED on the board
+ attached to pin 13.
+
+
+ created 2005
+ by DojoDave <http://www.0j0.org>
+ modified 30 Aug 2011
+ by Tom Igoe
+
+ This example code is in the public domain.
+
+ http://www.arduino.cc/en/Tutorial/Button
+ */
+
+// constants won't change. They're used here to
+// set pin numbers:
+const int buttonPin = 6;     // the number of the pushbutton pin
+const int button1Pin = 5;
+//const int ledPin =  13;      // the number of the LED pin
+const int outPin1 = 8;
+long debounce = 0; 
+long time=0;
+int state = HIGH; 
+int state1 = HIGH;// the current state of the output pin
+int reading,reading1;           // the current reading from the input pin
+int previous = LOW; 
+int previous1 = LOW;// the previous reading from the input pin
+
+// variables will change:
+int buttonState = 0;         // variable for reading the pushbutton status
+int button1State = 0;    
+void setup() {
+  Serial.begin(19200);
+  // initialize the LED pin as an output:
+  //pinMode(ledPin, OUTPUT);
+  // initialize the pushbutton pin as an input:
+  pinMode(buttonPin, INPUT);
+  pinMode(buttonPin,INPUT);
+}
+
+void loop() {
+ buttonState = digitalRead(buttonPin);
+ 
+ button1State = digitalRead(button1Pin);
+ reading = digitalRead(button1Pin);
+  // check if the pushbutton is pressed.
+  // if it is, the buttonState is HIGH:
+ // if ( millis() - time > debounce){
+//for (int i=1;i<8;i++){
+ if (button1State ==HIGH) {
+    // turn LED on:
+    Serial.print(1);
+  } else {
+    // turn LED off:
+    Serial.print(0);}
+  if (buttonState ==HIGH) {
+    // turn LED on:
+    Serial.println(1);
+  } else {
+    // turn LED off:
+    Serial.println(0);
+ }
+ /* if (reading == HIGH && previous == LOW && millis() - time > debounce) {
+    if (state == LOW)
+      //state = LOW;
+       Serial.println(1);
+    else
+     // state = HIGH;
+ Serial.println(0);
+    time = millis();    
+  }
+  previous = reading;*/
+// time = millis(); 
+   }
